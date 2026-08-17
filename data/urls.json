@@ -1,0 +1,11 @@
+[
+    {
+        "clicks": 0,
+        "code": "abc123",
+        "createdAt": "2026-08-18T04:00:00",
+        "customAlias": false,
+        "expiresAt": "",
+        "lastAccessedAt": "",
+        "originalUrl": "https://example.com"
+    }
+]

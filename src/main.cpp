@@ -1,6 +1,7 @@
 #include "crow.h"
 #include "storage.hpp"
 #include "models.hpp"
+#include "short_code.hpp"
 
 #include <iostream>
 
@@ -27,6 +28,8 @@ int main() {
     } else {
         std::cout << "Test record already exists\n";
     }
+
+    std::cout << generateShortCode() << "\n";
 
     CROW_ROUTE(app, "/")([](){
         return "URL Shortener is running!";

@@ -7,5 +7,23 @@
         "expiresAt": "",
         "lastAccessedAt": "",
         "originalUrl": "https://example.com"
+    },
+    {
+        "clicks": 0,
+        "code": "TIGw97",
+        "createdAt": "",
+        "customAlias": false,
+        "expiresAt": "",
+        "lastAccessedAt": "",
+        "originalUrl": "https://google.com"
+    },
+    {
+        "clicks": 0,
+        "code": "git",
+        "createdAt": "",
+        "customAlias": true,
+        "expiresAt": "",
+        "lastAccessedAt": "",
+        "originalUrl": "https://github.com"
     }
 ]

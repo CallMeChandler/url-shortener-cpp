@@ -116,5 +116,26 @@ int main() {
 
     });
 
+    CROW_ROUTE(app, "/<string>")
+    ([&storage](const std::string& code){
+        UrlRecord record;
+
+        if (!storage.findByCode(code, record)){
+            return crow::response(
+                404,
+                "Short URL not found"
+            );
+        }
+
+        crow::response response(302);
+
+        response.add_header(
+            "Location",
+            record.originalUrl
+        );
+
+        return response;
+    });
+
     app.port(8080).multithreaded().run();
 }

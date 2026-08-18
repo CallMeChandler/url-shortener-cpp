@@ -2,6 +2,7 @@
 #include "storage.hpp"
 #include "models.hpp"
 #include "short_code.hpp"
+#include "validation.hpp"
 
 #include <iostream>
 
@@ -30,6 +31,8 @@ int main() {
     }
 
     std::cout << generateShortCode() << "\n";
+    std::cout << isValidUrl("https://google.com") << "\n";
+    std::cout << isValidUrl("hello") << "\n";
 
     CROW_ROUTE(app, "/")([](){
         return "URL Shortener is running!";

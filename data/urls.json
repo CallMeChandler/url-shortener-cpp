@@ -18,12 +18,12 @@
         "originalUrl": "https://google.com"
     },
     {
-        "clicks": 0,
+        "clicks": 5,
         "code": "git",
         "createdAt": "",
         "customAlias": true,
         "expiresAt": "",
-        "lastAccessedAt": "",
+        "lastAccessedAt": "2026-08-19T20:22:36Z",
         "originalUrl": "https://github.com"
     }
 ]

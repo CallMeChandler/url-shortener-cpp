@@ -3,6 +3,7 @@
 #include "models.hpp"
 #include "short_code.hpp"
 #include "validation.hpp"
+#include "time_utils.hpp"
 
 #include <iostream>
 #include <string>
@@ -91,7 +92,7 @@ int main() {
         record.originalUrl = originalUrl;
         record.customAlias = customAlias;
 
-        record.createdAt = "";
+        record.createdAt = getCurrentTimestamp();
         record.expiresAt = "";
         record.lastAccessedAt = "";
 
@@ -126,6 +127,11 @@ int main() {
                 "Short URL not found"
             );
         }
+        
+        record.clicks++;
+        record.lastAccessedAt = getCurrentTimestamp();
+
+        storage.update(record);
 
         crow::response response(302);
 

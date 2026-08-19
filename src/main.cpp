@@ -94,6 +94,20 @@ int main() {
 
         record.createdAt = getCurrentTimestamp();
         record.expiresAt = "";
+
+        if (body.has("expiresInMinutes")){
+            int minutes = body["expiresInMinutes"].i();
+
+            if (minutes<=0){
+                return crow::response(
+                    400,
+                    R"({"error":"Expiration must be greater than 0"})"
+                );
+            }
+
+            record.expiresAt = getFutureTimestamp(minutes);
+        }
+
         record.lastAccessedAt = "";
 
         record.clicks = 0;
@@ -127,6 +141,12 @@ int main() {
                 "Short URL not found"
             );
         }
+
+        if (isExpired(record.expiresAt)) {
+            return crow::response(
+                410,
+                "Short URL has expired"
+        );
         
         record.clicks++;
         record.lastAccessedAt = getCurrentTimestamp();

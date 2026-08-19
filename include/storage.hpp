@@ -21,6 +21,8 @@ public:
 
     bool save(const UrlRecord& record);
 
+    bool update(const UrlRecord& record);
+
 private:
     std::string filePath;
 };

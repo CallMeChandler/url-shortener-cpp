@@ -121,3 +121,45 @@ bool Storage::save(const UrlRecord& record) {
 
     return true;
 }
+
+bool Storage::update(const UrlRecord& record){
+    std::ifstream input(filePath);
+
+    if (!input.is_open()){
+        return false;
+    }
+
+    json data;
+    input >> data;
+    input.close();
+
+    bool found = false;
+
+    for (auto& item:data){
+        if (item["code"]==record.code){
+            item["originalUrl"] = record.originalUrl;
+            item["customAlias"] = record.customAlias;
+            item["createdAt"] = record.createdAt;
+            item["expiresAt"] = record.expiresAt;
+            item["lastAccessedAt"] = record.lastAccessedAt;
+            item["clicks"] = record.clicks;
+
+            found = true;
+            break;
+        }
+    }
+
+    if (!found){
+        return false;
+    }
+
+    std::ofstream output(filePath);
+
+    if (!output.is_open()){
+        return false;
+    }
+
+    output << data.dump(4);
+
+    return true;
+}

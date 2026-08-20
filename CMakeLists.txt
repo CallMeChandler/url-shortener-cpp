@@ -26,6 +26,7 @@ add_executable(url_shortener
     src/short_code.cpp
     src/validation.cpp
     src/time_utils.cpp
+    src/cache.cpp
 )
 
 target_include_directories(url_shortener PRIVATE include)

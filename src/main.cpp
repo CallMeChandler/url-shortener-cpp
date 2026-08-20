@@ -4,6 +4,7 @@
 #include "short_code.hpp"
 #include "validation.hpp"
 #include "time_utils.hpp"
+#include "cache.hpp"
 
 #include <iostream>
 #include <string>
@@ -12,6 +13,7 @@ int main() {
     crow::SimpleApp app;
 
     Storage storage("../data/urls.json");
+    Cache cache;
 
     // std::cout << generateShortCode() << "\n";
     // std::cout << isValidUrl("https://google.com") << "\n";
@@ -23,7 +25,7 @@ int main() {
 
     CROW_ROUTE(app, "/api/shorten")
     .methods(crow::HTTPMethod::POST)
-    ([&storage](const crow::request& req) {
+    ([&storage, &cache](const crow::request& req) {
         auto body = crow::json::load(req.body);
 
         if (!body) {
@@ -119,6 +121,8 @@ int main() {
             );
         }
 
+        cache.put(record);
+
         crow::json::wvalue response;
 
         response["code"] = code;
@@ -132,14 +136,23 @@ int main() {
     });
 
     CROW_ROUTE(app, "/<string>")
-    ([&storage](const std::string& code){
+    ([&storage, &cache](const std::string& code){
         UrlRecord record;
 
-        if (!storage.findByCode(code, record)){
-            return crow::response(
-                404,
-                "Short URL not found"
-            );
+        auto cached = cache.get(code);
+
+        if (cached.has_value()) {
+            record = cached.value();
+        }
+        else {
+            if (!storage.findByCode(code, record)) {
+                return crow::response(
+                    404,
+                    "Short URL not found"
+                );
+            }
+
+            cache.put(record);
         }
 
         if (isExpired(record.expiresAt)) {
@@ -153,6 +166,8 @@ int main() {
         record.lastAccessedAt = getCurrentTimestamp();
 
         storage.update(record);
+
+        cache.put(record);
 
         crow::response response(302);
 

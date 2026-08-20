@@ -2,6 +2,7 @@
 
 #include <string>
 #include "models.hpp"
+#include <mutex>
 
 class Storage {
 public:
@@ -25,4 +26,5 @@ public:
 
 private:
     std::string filePath;
+    std::mutex fileMutex;
 };

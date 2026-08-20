@@ -10,6 +10,8 @@ Storage::Storage(const std::string& filePath) {
 }
 
 bool Storage::exists(const std::string& code) {
+    std::lock_guard<std::mutex> lock(fileMutex);
+
     std::ifstream file(filePath);
 
     if (!file.is_open()) {
@@ -32,6 +34,8 @@ bool Storage::findByCode(
     const std::string& code,
     UrlRecord& result
 ) {
+    std::lock_guard<std::mutex> lock(fileMutex);
+
     std::ifstream file(filePath);
 
     if (!file.is_open()) {
@@ -62,6 +66,8 @@ bool Storage::findByOriginalUrl(
     const std::string& url,
     UrlRecord& result
 ) {
+    std::lock_guard<std::mutex> lock(fileMutex);
+
     std::ifstream file(filePath);
 
     if (!file.is_open()) {
@@ -92,6 +98,8 @@ bool Storage::save(const UrlRecord& record) {
     json data;
 
     {
+        std::lock_guard<std::mutex> lock(fileMutex);
+
         std::ifstream file(filePath);
 
         if (file.is_open()) {
@@ -123,6 +131,8 @@ bool Storage::save(const UrlRecord& record) {
 }
 
 bool Storage::update(const UrlRecord& record){
+    std::lock_guard<std::mutex> lock(fileMutex);
+
     std::ifstream input(filePath);
 
     if (!input.is_open()){

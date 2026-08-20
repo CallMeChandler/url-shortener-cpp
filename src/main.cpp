@@ -146,7 +146,8 @@ int main() {
             return crow::response(
                 410,
                 "Short URL has expired"
-        );
+            );
+        }
         
         record.clicks++;
         record.lastAccessedAt = getCurrentTimestamp();

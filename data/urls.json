@@ -25,5 +25,50 @@
         "expiresAt": "",
         "lastAccessedAt": "2026-08-19T20:22:36Z",
         "originalUrl": "https://github.com"
+    },
+    {
+        "clicks": 0,
+        "code": "yvq5c2",
+        "createdAt": "2026-08-21T19:37:40Z",
+        "customAlias": false,
+        "expiresAt": "",
+        "lastAccessedAt": "",
+        "originalUrl": "https://example1.com"
+    },
+    {
+        "clicks": 0,
+        "code": "gtIVQI",
+        "createdAt": "2026-08-21T19:37:40Z",
+        "customAlias": false,
+        "expiresAt": "",
+        "lastAccessedAt": "",
+        "originalUrl": "https://example2.com"
+    },
+    {
+        "clicks": 0,
+        "code": "VwlvY3",
+        "createdAt": "2026-08-21T19:37:41Z",
+        "customAlias": false,
+        "expiresAt": "",
+        "lastAccessedAt": "",
+        "originalUrl": "https://example3.com"
+    },
+    {
+        "clicks": 0,
+        "code": "NCfeC5",
+        "createdAt": "2026-08-21T19:37:41Z",
+        "customAlias": false,
+        "expiresAt": "",
+        "lastAccessedAt": "",
+        "originalUrl": "https://example4.com"
+    },
+    {
+        "clicks": 0,
+        "code": "T0JkbT",
+        "createdAt": "2026-08-21T19:37:41Z",
+        "customAlias": false,
+        "expiresAt": "",
+        "lastAccessedAt": "",
+        "originalUrl": "https://example5.com"
     }
 ]

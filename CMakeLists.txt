@@ -27,6 +27,7 @@ add_executable(url_shortener
     src/validation.cpp
     src/time_utils.cpp
     src/cache.cpp
+    src/rate_limiter.cpp
 )
 
 target_include_directories(url_shortener PRIVATE include)

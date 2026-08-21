@@ -5,6 +5,7 @@
 #include "validation.hpp"
 #include "time_utils.hpp"
 #include "cache.hpp"
+#include "rate_limiter.hpp"
 
 #include <iostream>
 #include <string>
@@ -14,6 +15,7 @@ int main() {
 
     Storage storage("../data/urls.json");
     Cache cache;
+    RateLimiter limiter;
 
     // std::cout << generateShortCode() << "\n";
     // std::cout << isValidUrl("https://google.com") << "\n";
@@ -25,7 +27,16 @@ int main() {
 
     CROW_ROUTE(app, "/api/shorten")
     .methods(crow::HTTPMethod::POST)
-    ([&storage, &cache](const crow::request& req) {
+    ([&storage, &cache, &limiter](const crow::request& req) {
+        std::string clientIp = req.remote_ip_address;
+
+        if (!limiter.allowRequest(clientIp)){
+            return crow::response(
+                429,
+                R"({"error":"Rate limit exceeded. Try again in a minute."})"
+            );
+        }
+        
         auto body = crow::json::load(req.body);
 
         if (!body) {

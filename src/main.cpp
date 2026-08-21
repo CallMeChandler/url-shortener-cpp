@@ -9,6 +9,8 @@
 
 #include <iostream>
 #include <string>
+#include <fstream>
+#include <sstream>
 
 int main() {
     crow::SimpleApp app;
@@ -22,7 +24,16 @@ int main() {
     // std::cout << isValidUrl("hello") << "\n";
 
     CROW_ROUTE(app, "/")([](){
-        return "URL Shortener is running!";
+
+        std::ifstream file("../static/index.html");
+
+        std::stringstream buffer;
+        buffer << file.rdbuf();
+
+        crow::response res(buffer.str());
+        res.set_header("Content-Type","text/html");
+
+        return res;
     });
 
     CROW_ROUTE(app, "/api/shorten")

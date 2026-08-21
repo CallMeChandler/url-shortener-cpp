@@ -190,5 +190,55 @@ int main() {
         return response;
     });
 
+    CROW_ROUTE(app, "/api/urls")
+    ([&storage]() {
+
+        auto urls = storage.getAll();
+
+        crow::json::wvalue response;
+
+        for (size_t i = 0; i < urls.size(); i++) {
+
+            response[i]["code"] = urls[i].code;
+            response[i]["originalUrl"] = urls[i].originalUrl;
+            response[i]["clicks"] = urls[i].clicks;
+            response[i]["createdAt"] = urls[i].createdAt;
+            response[i]["expiresAt"] = urls[i].expiresAt;
+            response[i]["lastAccessedAt"] = urls[i].lastAccessedAt;
+            response[i]["customAlias"] = urls[i].customAlias;
+        }
+
+        return crow::response(response);
+    });
+
+    CROW_ROUTE(app, "/api/stats")
+    ([&storage]() {
+
+        auto urls = storage.getAll();
+
+        int totalClicks = 0;
+        int activeUrls = 0;
+        int expiredUrls = 0;
+
+        for (const auto& url : urls) {
+
+            totalClicks += url.clicks;
+
+            if (isExpired(url.expiresAt))
+                expiredUrls++;
+            else
+                activeUrls++;
+        }
+
+        crow::json::wvalue response;
+
+        response["totalUrls"] = (int)urls.size();
+        response["totalClicks"] = totalClicks;
+        response["activeUrls"] = activeUrls;
+        response["expiredUrls"] = expiredUrls;
+
+        return crow::response(response);
+    });
+
     app.port(8080).multithreaded().run();
 }

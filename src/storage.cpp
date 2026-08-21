@@ -173,3 +173,36 @@ bool Storage::update(const UrlRecord& record){
 
     return true;
 }
+
+std::vector<UrlRecord> Storage::getAll() {
+
+    std::lock_guard<std::mutex> lock(fileMutex);
+
+    std::vector<UrlRecord> records;
+
+    std::ifstream file(filePath);
+
+    if (!file.is_open()) {
+        return records;
+    }
+
+    json data;
+    file >> data;
+
+    for (const auto& item : data) {
+
+        UrlRecord record;
+
+        record.code = item["code"];
+        record.originalUrl = item["originalUrl"];
+        record.customAlias = item["customAlias"];
+        record.createdAt = item["createdAt"];
+        record.expiresAt = item["expiresAt"];
+        record.lastAccessedAt = item["lastAccessedAt"];
+        record.clicks = item["clicks"];
+
+        records.push_back(record);
+    }
+
+    return records;
+}

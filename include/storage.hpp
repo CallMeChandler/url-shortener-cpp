@@ -3,6 +3,7 @@
 #include <string>
 #include "models.hpp"
 #include <mutex>
+#include <vector>
 
 class Storage {
 public:
@@ -23,6 +24,8 @@ public:
     bool save(const UrlRecord& record);
 
     bool update(const UrlRecord& record);
+
+    std::vector<UrlRecord> getAll();
 
 private:
     std::string filePath;
